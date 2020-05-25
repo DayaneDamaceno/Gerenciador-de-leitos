@@ -1,0 +1,330 @@
+/*RESETANDO PADROES*/
+@import url('https://fonts.googleapis.com/css?family=DM+Sans:400,500,700&display=swap');
+
+*{
+    margin:0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    box-sizing: border-box;
+    font-family: 'DM Sans', sans-serif;
+
+}
+body{
+    background-color: #F6F6F6;
+}
+button{
+    cursor: pointer;
+}
+ul, ol, li, a{
+    list-style: none;
+    text-decoration: none;
+}
+
+::-webkit-scrollbar{
+    width: 8px;
+}
+::-webkit-scrollbar-track{
+    background-color: #ffffff;
+}
+::-webkit-scrollbar-thumb{
+    background-color: #6A7BFF;
+    border-radius: 10px;
+    
+}
+::-webkit-inner-spin-button { display: none; }
+::-webkit-calendar-picker-indicator { display: none; }
+::-webkit-datetime-edit-text { color: white;}
+::-webkit-datetime-edit-month-field { color: white; }
+::-webkit-datetime-edit-day-field { color: white; }
+::-webkit-datetime-edit-year-field { color: white; }
+/******************************************************************/
+header{
+    width: 100%;
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10%;
+}
+
+/*******************************************************************/
+.contAlterar{
+    width: 35%;
+    height: 32%;
+    padding: 20px 42px;
+    background-color: #ffffff;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+}
+.container_completo{
+    position: relative;
+    display: flex;
+    width: 90vw;
+    justify-content: space-between;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.conteudo{
+    margin-top: 20px;
+    width: 60%;
+}
+.conteudo_info{
+    padding-left: 100px;
+    margin-top: 20px;
+    width: 30%;
+
+}
+.info > p{
+    margin: 10px 0;
+}
+.info{
+    margin-bottom: 30px;
+    width: 100%;
+}
+.info_disponivel{
+    display: flex;
+    background-color: #FF6A9C;
+    width: 100%;
+    height: 120px;
+    border-radius: 8px;
+    padding: 10px 15px;
+    color: #FFFFFF;
+}
+.info-tot{
+    display: flex;
+    justify-content: space-between;
+}
+.info_leitos{
+    background-color: #6A7BFF;
+    width: 150px;
+    height: 100px;
+    border-radius: 8px;
+    padding: 15px 25px;
+    color: #FFFFFF;
+}
+.info_leitos > h1{
+    margin-top: 10px;
+}
+.format{
+    padding: 10px 15px;
+    color: #FFFFFF;
+}
+.format > h1{
+    margin-top: 10px;
+}
+.enfermaria{
+    margin-left: 80px;
+}
+
+/*****************************************************/
+.add_paciente form{
+    margin-top: 10px;
+    width: 450px;
+    margin-bottom: 50px;
+}
+.add_paciente form input, .add_paciente form select{
+    border-radius: 3px;
+    background-color: #C5CBDF;
+    height: 35px;
+    padding: 0 20px;
+    margin-top: 8px;
+}
+.txt{
+    width: 100%;
+}
+.group_input{
+    display: flex; 
+}
+.group_input > input, .group_input > select{
+    width: 145px;
+    margin-left: 10px;
+    padding: 0 10px;
+    
+}
+.group_input > select {
+    color: white;
+}
+.group_input input:first-of-type{
+    margin-left: 0;
+}
+.add_paciente form input[type="submit"]{
+    background-color: #6A7BFF;
+    color: #FFFFFF;
+    font-size: 16px;
+    padding: 8px 190px;
+    border-radius: 3px;
+    width: 450px;
+}
+h2{
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+.consultar_paciente form{
+    width: 450px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+.consultar_paciente form input[type="text"]{
+    width: 75%;
+    border-radius: 3px;
+    background-color: #C5CBDF;
+    height: 35px;
+    padding: 0 20px;
+}
+.consultar_paciente form input[type="submit"]{
+    width: 23%;
+    border-radius: 3px;
+    background-color: #FF6A9C;
+    height: 35px;
+    color: #ffffff;
+    font-weight: 500;
+}
+.item{
+    width: 54.5%;
+    height: 130px;
+    display: flex;
+    padding: 15px 18px;
+    margin-bottom: 15px;
+    justify-content: space-between;
+    background-color: white;
+    border-radius: 5px;
+}
+.item p{
+    color: #6A7BFF;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+.item p+p{
+    color: #333333;
+    font-weight: 400;
+    font-size: 15px;
+}
+.acoes a{
+    text-decoration: none;
+    background-color: transparent;
+    padding: 0 12px;
+} 
+
+
+::-webkit-input-placeholder{
+	color: white;
+}
+.cont-login-page{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 37%;
+	height: 300px;
+	display: flex;
+	justify-content: space-between;
+}
+.cont-login-aproach{
+	height: 300px;
+	width: 180px;
+	padding-top: 25px;
+	text-align: right;
+	color: #6a7bff;
+	font-style: bold;
+}
+.paragf-aproach{
+	width: 180px;
+	margin-top: 20px;
+}
+.cont-login-log{
+	height: 250px;
+	width: 375px;
+	padding: 0 25px;
+	background-color: white;
+	-webkit-box-shadow: 1px -1px 10px 0px rgba(138, 138, 138, 0.2);
+	-moz-box-shadow: 1px -1px 10px 0px rgba(138, 138, 138, 0.2);
+	box-shadow: 1px -1px 10px 0px rgba(138, 138, 138, 0.2);
+}
+.cont-login-log > h1{
+	padding-top: 25px;
+	font-size: 20px;
+	color: #6a7bff;
+}
+.cont-login-log > form > input{
+	margin-top: 10px;
+	height: 35px;
+	width: 325px;
+	padding-left: 15px;
+	color: white;
+	background-color: #c5cbdf;
+	border-radius: 3px;
+}
+.cont-login-log input[type=submit]{
+	background-color: #6a7bff;
+	padding-left: 0;
+	margin-top: 45px;
+}
+.login-link{
+	position: absolute;
+	bottom: 0%;
+	right: 0%;
+}
+.login-link > p{
+	color: #ff71a1;
+}
+.login-link > p > a{
+	color: #ff71a1;
+	font-weight: 500;
+}
+
+.register{
+    position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 28%;
+    height: 500px;
+}
+.register > svg{
+    position: relative;
+	left: 50%;
+    transform: translate(-50%);  
+}
+.register > form{
+    width: 100%;
+    background-color: white;
+    padding: 25px;
+}
+.register > form > h1{
+    font-size: 24px;
+    font-weight: 700;
+    color: #6A7BFF;
+}
+.register  form  input{
+    width: 100%;
+    height: 35px;
+    background: #C5CBDF;
+    margin-top: 12px;
+    padding-left: 20px;
+    border-radius: 3px;
+}
+.register  form p{
+    margin-top: 10px;
+}
+.register  form  input[type="submit"]{
+    background-color: #6a7bff;
+    padding-left: 0;
+    color: white;
+   margin-top: 30px;
+}
+.group-leito{
+    margin-top: -5px;
+    display: flex;
+    justify-content: space-between;
+}
+.group-leito > input[type="number"]{
+    width: 48%;
+}
+.group-leito input:first-of-type{
+    padding-right: 10px;
+}
