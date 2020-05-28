@@ -66,7 +66,14 @@ if (isset($_POST['alterar'])) {
             while($Linha = $Comando->fetch(PDO::FETCH_OBJ)){
                 $nome = $Linha->nome;
                 $nasc = $Linha->nascimento;
-                $leito = $Linha->id_leito;
+                $id_leito = $Linha->id_leito;
+
+                $sql = $conn->prepare("SELECT num_leito FROM leitos WHERE id_leito = ?");
+                $sql->bindParam(1, $id_leito);
+                $sql->execute();
+                $res = $sql->fetch(PDO::FETCH_ASSOC);
+                $leito = $res['num_leito'];
+            
     ?>
         <form action="" method="post">
             <input type="text" class="txt"name="nome_paciente" id="nome_paciente" value="<?php echo $nome ?>">

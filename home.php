@@ -40,24 +40,24 @@ session_start();
             <p>Disponiveis</p>
             <div class="info_disponivel">    
             <?php
-                $Comando=$conn->prepare("SELECT COUNT(*) as total FROM leitos where id_hospital = ? and status_leito='Ocupado' and tipo_leito='UTI'");
-                $Comando->bindParam(1, $_SESSION['id']);   
-                            
-                if ($Comando->execute()){
-                    if ($Comando->rowCount() >0){ 
-                        while($Linha = $Comando->fetch(PDO::FETCH_OBJ)){
-                            $total_UTI= $Linha->total;
-
-                            ?>
-                            <div class="uti format">
-                            <p>UTI</p>
-                            <h1><?php echo $total_UTI;?></h1>
-                            </div>
-                            <?php
-                        }
-                    }
-                }
-                $Comando=$conn->prepare("SELECT COUNT(*) as total FROM leitos where id_hospital = ? and status_leito='Ocupado' and tipo_leito='Enfermaria'");
+                 $Comando=$conn->prepare("SELECT COUNT(*) as total FROM leitos where id_hospital = ? and status_leito='Disponivel' and tipo_leito='UTI'");
+                 $Comando->bindParam(1, $_SESSION['id']);   
+                             
+                 if ($Comando->execute()){
+                     if ($Comando->rowCount() >0){ 
+                         while($Linha = $Comando->fetch(PDO::FETCH_OBJ)){
+                             $total_UTI= $Linha->total;
+ 
+                             ?>
+                             <div class="uti format">
+                             <p>UTI</p>
+                             <h1><?php echo $total_UTI;?></h1>
+                             </div>
+                             <?php
+                         }
+                     }
+                 }
+                 $Comando=$conn->prepare("SELECT COUNT(*) as total FROM leitos where id_hospital = ? and status_leito='Disponivel' and tipo_leito='Enfermaria'");
                 $Comando->bindParam(1, $_SESSION['id']);   
                             
                 if ($Comando->execute()){
