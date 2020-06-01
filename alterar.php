@@ -1,37 +1,106 @@
 <?php
 include 'conexao.php';
+session_start();
+var_dump($_GET) ;
 
 if (isset($_POST['alterar'])) {
     $nome = $_POST["nome_paciente"];
     $nasc= $_POST["nasc"];
     $leito = $_POST["leito"];
     $id = $_GET['id'];
+    $id_leito = $_GET['lt'];
+    $tipoLeito = $_GET['tp'];
+    
     
     try{  
-        $Comando=$conn->prepare("UPDATE pacientes SET nome=?, nascimento=?, id_leito=? WHERE id_paciente=?");
+        $smd = $conn->prepare("SELECT id_leito from leitos where num_leito= ? and tipo_leito= ? and id_hospital= ?");
+        $smd->bindParam(1, $leito);
+        $smd->bindParam(2, $tipoLeito);
+        $smd->bindParam(3, $_SESSION['id']);
+        $smd->execute();
+        $response = $smd->fetch(PDO::FETCH_ASSOC);
+        $new_leito = $response['id_leito'];
+
+        if ($id_leito != $new_leito) {
+            $sql= $conn->prepare("UPDATE leitos SET status_leito='Disponivel' WHERE id_leito=?");
+            $sql->bindParam(1, $id_leito);
+            $sql->execute();
+
+            if ($rep['status_leito'] == 'Ocupado') {
+                echo "<script> alert('Leito ja está ocupado')</script>"; 
+                header('Refresh: 0; url=alterar.php');
+                return;
+            }else {
+                $sql= $conn->prepare("SELECT * FROM leitos where id_leito=?");
+                $sql->bindParam(1, $new_leito);
+                $sql->execute();
+                $rep= $sql->fetch(PDO::FETCH_ASSOC); 
+
+                $Comando=$conn->prepare("UPDATE pacientes SET nome=?, nascimento=?, id_leito=? WHERE id_paciente=? and id_hospital=?");
         
-        $Comando->bindParam(1, $nome);
-        $Comando->bindParam(2, $nasc);
-        $Comando->bindParam(3, $leito);
-        $Comando->bindParam(4, $id);
-                         
-        if ($Comando->execute()){
-            if ($Comando->rowCount() >0){
-                echo "<script> alert('Dados Alterados com sucesso!!')</script>"; 
-                $nome = null;
-                $nasc = null;
-                $leito = null;
-                $id = null;
-                header('Refresh: 0; url=home.php');
-            
-            } else{
-                echo "Erro ao tentar Alterar Dados";
+                $Comando->bindParam(1, $nome);
+                $Comando->bindParam(2, $nasc);
+                $Comando->bindParam(3, $new_leito);
+                $Comando->bindParam(4, $id);
+                $Comando->bindParam(5, $_SESSION['id']);
+                                
+                if ($Comando->execute()){
+                    if ($Comando->rowCount() >0){
+                        $sql=$conn->prepare("UPDATE leitos SET status_leito='Ocupado' WHERE id_leito=?");
+                        $sql->bindParam(1, $new_leito);
+                        $sql->execute();
+                        echo "<script> alert('Dados Alterados com sucesso!!')</script>"; 
+                        $nome = null;
+                        $nasc = null;
+                        $leito = null;
+                        $id = null;
+                        $id_leito = null;
+                        $tipoLeito = null;
+                        header('Refresh: 0; url=home.php');
+                    
+                    } else{
+                        echo "Erro ao tentar Alterar Dados";
+                    }
+                } else{ 
+                    
+                    throw new PDOException("Erro: Não foi possivel executar a declaração sql.");
+                
+                }  
             }
-        } else{ 
-            
-            throw new PDOException("Erro: Não foi possivel executar a declaração sql.");
+        }else{
+            $Comando=$conn->prepare("UPDATE pacientes SET nome=?, nascimento=?, id_leito=? WHERE id_paciente=? and id_hospital=?");
         
-        }    
+            $Comando->bindParam(1, $nome);
+            $Comando->bindParam(2, $nasc);
+            $Comando->bindParam(3, $id_leito);
+            $Comando->bindParam(4, $id);
+            $Comando->bindParam(5, $_SESSION['id']);
+                            
+            if ($Comando->execute()){
+                if ($Comando->rowCount() >0){
+                    echo "<script> alert('Dados Alterados com sucesso!!')</script>"; 
+                    $nome = null;
+                    $nasc = null;
+                    $leito = null;
+                    $id = null;
+                    $id_leito = null;
+                    $tipoLeito = null;
+                    header('Refresh: 0; url=home.php');
+                
+                } else{
+                    echo "Erro ao tentar Alterar Dados";
+                }
+            } else{ 
+                
+                throw new PDOException("Erro: Não foi possivel executar a declaração sql.");
+            
+            }   
+        }
+        
+
+
+
+         
    }catch (PDOException $erro){
        echo"Erro" . $erro->getMessage();
    }
