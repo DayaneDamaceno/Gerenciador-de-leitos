@@ -1,17 +1,28 @@
 <?php header("Content-type: text/html; charset=utf-8"); ?>
 <?php
 include 'conexao.php';
+include 'validar_cpf.php';
 session_start();
 
 if (isset($_POST["add"])) {
 
     $nome = $_POST["nome_paciente"];
+    $cpf = $_POST["cpf"];
     $nasc= $_POST["nasc"];
     $leito = $_POST["leito"];
     $tipoLeito = $_POST["tipo_leito"];
     date_default_timezone_set('America/Sao_Paulo');
     $hora_entrada = Date('H:i');
     $data_entrada = Date('Y/m/d');
+
+    $verifica = validaCPF($cpf);
+
+    if ($verifica === false) {
+        echo "<script> alert('CPF Invalido! :/')</script>";
+        header('Refresh: 0; url=home.php');
+        return;
+    }
+
     
     try{  
         $smd = $conn->prepare("SELECT id_leito from leitos where num_leito= ? and tipo_leito= ? and id_hospital= ?");
@@ -33,15 +44,16 @@ if (isset($_POST["add"])) {
         if ($tipo === $tipoLeito and $status === 'Disponivel'){
 
             $Comando=$conn->prepare(
-                "INSERT INTO pacientes(nome, nascimento, id_leito, hora_entrada, data_entrada, id_hospital)
-                VALUES (?, ?, ?, ?, ?, ?)");
+                "INSERT INTO pacientes(nome, cpf, nascimento, id_leito, hora_entrada, data_entrada, id_hospital)
+                VALUES (?, ?, ?, ?, ?, ?, ?)");
             
             $Comando->bindParam(1, $nome);
-            $Comando->bindParam(2, $nasc);
-            $Comando->bindParam(3, $id_leito);
-            $Comando->bindParam(4, $hora_entrada);
-            $Comando->bindParam(5, $data_entrada);
-            $Comando->bindParam(6, $_SESSION['id']);
+            $Comando->bindParam(2, $cpf);
+            $Comando->bindParam(3, $nasc);
+            $Comando->bindParam(4, $id_leito);
+            $Comando->bindParam(5, $hora_entrada);
+            $Comando->bindParam(6, $data_entrada);
+            $Comando->bindParam(7, $_SESSION['id']);
             
             if ($Comando->execute()){
                  if ($Comando->rowCount() >0) {

@@ -1,6 +1,7 @@
 <?php header("Content-type: text/html; charset=utf-8"); ?>
 <?php
 include 'conexao.php';
+
 session_start();
 ?>
 
@@ -82,41 +83,52 @@ session_start();
         <div class="add_paciente">
             <h2>Adicionar novo paciente</h2>
             <form action="add_paciente.php" method="post">
-                <input type="text" class="txt"name="nome_paciente" id="nome_paciente" placeholder="Nome do paciente">
+                <input type="text" class="txt"name="nome_paciente" id="nome_paciente" placeholder="Nome do paciente" require>
+                
                 <div class="group_input">
-                    <input type="date" name="nasc" id="nasc" placeholder="Data de nascimento">
-                    <input type="number" name="leito" placeholder="Leito"> 
-                    <select name="tipo_leito" id="" placeholder="Tipo do leito">
+                    <input type="text" name="cpf" id="cpf" placeholder="CPF" maxlength="14" require onkeypress="formatar_mascara(this,'###.###.###-##')">
+                    <input type="date" name="nasc" id="nasc" placeholder="Data de nascimento" require>
+                </div>
+                <div class="group_input">
+                    <input type="number" name="leito" placeholder="Leito" require> 
+                    <select name="tipo_leito" id="" placeholder="Tipo do leito" require>
                         <option value="UTI">UTI</option>
                         <option value="Enfermaria">Enfermaria</option>
-                    </select> 
-                     
+                    </select>     
                 </div>
                 <input type="submit" name="add"value="Adicionar">
             </form>
         </div>
 
+        
+
         <div class="consultar_paciente">
             <h2>Consultar paciente</h2>
             <form action="" method="post">   
-                <input type="text" name="nomepaciente" id="nome_paciente" placeholder="Nome do paciente">
+                <input type="text" name="cpfpaciente" placeholder="CPF do paciente" maxlength="14" require onkeypress="formatar_mascara(this,'###.###.###-##')">
                 <input type="submit" name="consultar" value="Consultar">
             </form>
             <?php
                 if (isset($_POST["consultar"])) {
 
-                $nome = '%' . $_POST["nomepaciente"] . '%';
+                $CPF = '%' . $_POST["cpfpaciente"] . '%';
 
                 $Comando=$conn->prepare("SELECT * FROM pacientes
-                WHERE nome LIKE ? and id_hospital=?");   
+                WHERE cpf LIKE ? and id_hospital=?");   
                 
-                $Comando->bindParam(1, $nome);
+                $Comando->bindParam(1, $CPF);
                 $Comando->bindParam(2, $_SESSION['id']);
                 
                 if ($Comando->execute()){
                     if ($Comando->rowCount() >0){ 
                         $res = $Comando->fetch(PDO::FETCH_ASSOC);
                         $idd = $res['id_leito'];
+                       
+                        $dataEntrada = $res['data_entrada'];
+                        
+                        $dateEn = date_create($dataEntrada);
+                        $dateToday = date_create(date('Y-m-d'));
+                        $diff = date_diff($dateEn, $dateToday);
 
                         $hora = date('H:i', strtotime($res['hora_entrada']));
                         $data = date('d/m/Y', strtotime($res['data_entrada']));
@@ -139,6 +151,7 @@ session_start();
                                     <p>Paciente: <?php echo $res['nome'];?></p>
                                     <p>Hora de Entrada: <?php echo $hora?></p>
                                     <p>Data de Entrada: <?php echo $data?></p>
+                                    <p>Internado há <?php echo $diff->days;?> dias</p>
                                 </div>
                                 <div class="acoes">
                                     <a href="alterar.php?id=<?php echo $res['id_paciente']?>&lt=<?php echo $idd?>&tp=<?php echo $resul['tipo_leito']?>">
@@ -162,4 +175,17 @@ session_start();
 </div>
 
 </body>
+<script type="text/javascript">
+
+function formatar_mascara(src, mascara) {
+    var campo = src.value.length;
+    var saida = mascara.substring(0,1);
+    var texto = mascara.substring(campo);
+
+    if(texto.substring(0,1) != saida) {
+        src.value += texto.substring(0,1);
+    }
+}
+
+</script>
 </html>

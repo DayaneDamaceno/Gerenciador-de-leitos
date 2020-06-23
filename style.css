@@ -139,7 +139,7 @@ header{
     display: flex; 
 }
 .group_input > input, .group_input > select{
-    width: 145px;
+    width: 250px;
     margin-left: 10px;
     padding: 0 10px;
     
@@ -186,7 +186,7 @@ h2{
 }
 .item{
     width: 54.5%;
-    height: 130px;
+    height: auto;
     display: flex;
     padding: 15px 18px;
     margin-bottom: 15px;
