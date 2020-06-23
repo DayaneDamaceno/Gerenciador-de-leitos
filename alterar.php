@@ -1,7 +1,6 @@
 <?php
 include 'conexao.php';
 session_start();
-var_dump($_GET) ;
 
 if (isset($_POST['alterar'])) {
     $nome = $_POST["nome_paciente"];
