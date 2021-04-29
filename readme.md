@@ -1,6 +1,6 @@
 # Gerenciador de Leitos
 
-Projeto para fins de estudo, que tem como proposta ajudar hospitais no gerenciamneto de leitos, tanto UTIs e Enfermaria.
+Projeto para fins de estudo, que tem como proposta ajudar hospitais no gerenciamento de leitos, tanto UTIs e Enfermaria.
 
 Nós sabemos que não estamos vivenciando um momento facil, em relação a pandemia de COVID-19, mas como uma progamadora busco ajudar de alguma forma para facilitar o dia-dia de Hospitais nesse momento de sobre-carga de pacientes por todo o país.
 
